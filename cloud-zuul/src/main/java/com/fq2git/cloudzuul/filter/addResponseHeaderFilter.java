@@ -1,10 +1,11 @@
-package com.fq2git.cloudzuul.config;
+package com.fq2git.cloudzuul.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.UUID;
@@ -34,6 +35,7 @@ public class addResponseHeaderFilter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletResponse response = requestContext.getResponse();
         response.setHeader("FQ-SHL",UUID.randomUUID().toString());
+
         return null;
     }
 }

@@ -2,6 +2,7 @@ package com.fq2git.clouduser.controller;
 
 import com.fq2git.clouduser.constant.CookieConstant;
 import com.fq2git.clouduser.constant.RedisConstant;
+import com.fq2git.clouduser.service.UserService;
 import com.fq2git.clouduser.utils.CookieUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -21,12 +23,16 @@ public class LoginController {
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/login")
     public String userLogin(@RequestParam("password") String password,
                             HttpServletResponse response,
                             HttpServletRequest request){
         //判断是否已经登录
+        HttpSession session = request.getSession();
+        session.getAttribute("LoginUser");
         Cookie cookie = CookieUtil.get(request,CookieConstant.TOKEN);
         if(cookie != null && !StringUtils.isEmpty(stringRedisTemplate.opsForValue().get(String.format(RedisConstant.TOKEN_TEMPLATE,cookie.getValue())))){
             return "登录成功";
@@ -42,6 +48,8 @@ public class LoginController {
                 password,
                 expire,TimeUnit.SECONDS);
 
+        session.setAttribute("LoginUser",userService.getUser());
+        session.setMaxInactiveInterval(3600);
         //cookie里设置password = 123456
         CookieUtil.set(response,CookieConstant.TOKEN,token,CookieConstant.expire);
         return "登录成功";

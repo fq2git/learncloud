@@ -8,6 +8,7 @@ eureka:
 server:
   port: 8084
 zuul:
+  sensitive-headers:
   routes:
     myticket:
       path: /myticket/** #路由配置 -》ticket 服务
@@ -17,9 +18,10 @@ zuul:
       path: /userlogin/**
       serviceId: user
       sensitiveHeaders:
+
 #简洁写法
 #    ticket: /myticket/**
   #排除路由
-  ignored-patterns:
-    - /myticket/getticket
-    - /ticket/getticket
+#  ignored-patterns:
+#    - /myticket/getticket
+#    - /ticket/getticket

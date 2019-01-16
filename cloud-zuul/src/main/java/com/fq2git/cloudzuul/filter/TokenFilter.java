@@ -1,4 +1,4 @@
-package com.fq2git.cloudzuul.config;
+package com.fq2git.cloudzuul.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -33,13 +33,13 @@ public class TokenFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
+//        //这里从url参数获取，额可以从cookie,header里获取
+//        String token = request.getParameter("token");
+//        if(StringUtils.isEmpty(token)){
+//            requestContext.setSendZuulResponse(false);
+//            requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+//        }
 
-        //这里从url参数获取，额可以从cookie,header里获取
-        String token = request.getParameter("token");
-        if(StringUtils.isEmpty(token)){
-            requestContext.setSendZuulResponse(false);
-            requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
-        }
 
         return null;
     }
