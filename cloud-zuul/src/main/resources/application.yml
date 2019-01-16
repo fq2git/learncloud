@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8084
+zuul:
+  routes:
+    myticket:
+      path: /myticket/** #路由配置 -》ticket 服务
+      serviceId: ticket
+      sensitiveHeaders:
+    users:
+      path: /userlogin/**
+      serviceId: user
+      sensitiveHeaders:
+#简洁写法
+#    ticket: /myticket/**
+  #排除路由
+  ignored-patterns:
+    - /myticket/getticket
+    - /ticket/getticket
