@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @Slf4j
@@ -17,7 +16,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/getuser")
-    public User getUser(HttpServletResponse response){
+    public User getUser(){
         return  userService.getUser();
     }
 }

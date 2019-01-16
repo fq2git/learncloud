@@ -1,6 +1,9 @@
 spring:
   application:
     name: gateway
+  redis:
+    host: 172.16.1.111
+    port: 6379
 eureka:
   client:
     service-url:
